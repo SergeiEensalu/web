@@ -1,45 +1,3 @@
-# create-svelte
-
-Everything you need to build a Svelte project, powered
-by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a
-development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target
-> environment.
-
 # Welcome to Whale, a server and web application designed to interact with Telegram users via a bot.
 
 #### This README provides instructions on setting up and running both the server and web app components.
@@ -48,38 +6,7 @@ You can preview the production build with `npm run preview`.
 
 Before you begin, ensure you have Node.js and npm installed on your machine.
 
-### For Server Project
-
-#### 1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd whale-server
-```
-
-#### 2. Install dependencies:
-
-```bash
-npm install
-```
-
-### For Web Project
-
-#### 1. Clone the repository:
-
-```bash
-git clone <repository-url>
-cd web
-```
-
-#### 2. Install dependencies:
-
-```bash
-npm install
-```
-
-
-### 3. Create or edit ngrok.yml under your project directory or use existing one in project. Example:
+### 1. Find ngrok.yml file under SERVER project. Example of ngrok.yml:
 
 ```bash
 version: "2"
@@ -93,50 +20,138 @@ tunnels:
     proto: http
 ```
 
-### 4. Run
+### 2. Download and Run ngrok.yml
+
+download ngrok:
+https://ngrok.com/download
+
+In server project exist ngrok.yml - in you terminal go to server root project /server (ngrok.yml)
+
+```bash
+ngrok start --config ngrok.yml --all
+```
+
+If not, please follow this command:
+
 ```bash
 ngrok start --config /path/to/your/ngrok.yml --all
 ```
 
-Note down the forwarded URLs provided by ngrok, such as:
+Note down the forwarded URLs provided by ngrok, such as (this is an example):
 
-https://b526-82-131-110-53.ngrok-free.app -> http://localhost:5173
-https://dffb-82-131-110-53.ngrok-free.app -> http://localhost:3000
+```bash
+LINK 1: https://b526-82-131-110-53.ngrok-free.app -> http://localhost:5173
+LINK 2: https://dffb-82-131-110-53.ngrok-free.app -> http://localhost:3000
+```
 
-Configuration
+![img.png](img.png)
+
+### 3.Configuration
+
 After ngrok is running, update the following configurations in your project:
 
-Server Configuration
-1. Update the URL in whale-server/src/service/start.ts:
+### Server Configuration
 
-url: `https://b526-82-131-110-53.ngrok-free.app/login` // TODO: REPLACE THIS!
+1. Take LINK 1 from paragraph nr 3 (previous part) and update the URL in SERVER: server/src/service/start.ts:
 
+```bash
+  const options = {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: 'Open Website',
+            web_app: {
+              url: `${YOUR_URL}/login` // TODO: REPLACE 'YOUR_URL' WITH YOU LINK 1. 
+            }
+          }
+        ]
+      ]
+    }
+  };
+```
 
-2. Telegram Token: Replace the token in whale-server/index.ts:
+Code should like something like this (this is example)
 
-const TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN_HERE'; // TODO: REPLACE THIS!
-Web Configuration
-Base URL: Update the base URL in whale-web/src/server/index.ts:
-typescript
-Copy code
-export const BASE_URL = 'https://dffb-82-131-110-53.ngrok-free.app'; // TODO: REPLACE THIS!
-Running the Server Locally
+```bash
+  const options = {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          {
+            text: 'Open Website',
+            web_app: {
+              url: `https://b526-82-131-110-53.ngrok-free.app/login` // TODO: REPLACE 'YOUR_URL' WITH YOU LINK 1.
+            }
+          }
+        ]
+      ]
+    }
+  };
+  
+```
+
+### WEB Configuration
+
+1. Take LINK 2 from paragraph nr 3 (previous part) and update the URL in WEB: web/src/server/index.ts:
+
+```bash
+export const BASE_URL = `${YOUR_URL}`; // TODO: REPLACE 'YOUR_URL' WITH YOU LINK 2.
+```
+
+Code should like something like this (this is example)
+
+```bash
+export const BASE_URL = 'https://dffb-82-131-110-53.ngrok-free.app'; // TODO: REPLACE 'YOUR_URL' WITH YOU LINK 2.
+```
+
+### 4. Telegram bot:
+
+Located here:
+https://t.me/whale_demo_project_2023_bot
+
+### 5.Running the Server Locally
+
 To start the server locally:
 
-bash
-Copy code
-npm start
-Running the Web App Locally
-To run the web app in development mode:
+```bash
+npm install
+npm run build
+npm run start
+```
 
-bash
-Copy code
+### 6.Running the WEB Locally
+
+To start the server locally:
+
+```bash
+npm install
+npm run build
 npm run dev
-Commands for Telegram App
-Main Commands
+```
+
+### Commands for Telegram App
+
+# Main Commands
+
+```bash
 /start: Initialize the bot.
-/adminhello telegramId message: Example: /adminhello 976166394 hello from admin
+/adminhello telegramId message 
+
+Example: /adminhello 976166394 hello from admin
+```
+
 Admin Commands
-/setAdmin telegramId boolean: Example:
+
+```bash
+/setAdmin telegramId boolean: 
+
+Example:
 /setAdmin 976166394 1: Set user 976166394 as admin.
 /setAdmin 976166394 0: Set user 976166394 as not admin.
+```
+
+Couple examples:
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+![img_3.png](img_3.png)

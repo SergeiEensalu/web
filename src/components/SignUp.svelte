@@ -1,5 +1,4 @@
 <script>
-  import {userStore} from '../stores/user.ts';
   import {v4 as uuidv4} from 'uuid';
   import {goto} from "$app/navigation";
   import {register} from '../server/register.ts';
