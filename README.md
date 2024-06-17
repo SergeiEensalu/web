@@ -7,7 +7,7 @@
 Before you begin, ensure you have Node.js and npm installed on your machine.
 
 ### 1. Find ngrok.yml file under SERVER project. Example of ngrok.yml:
-
+Server: https://github.com/SergeiEensalu/server
 ```bash
 version: "2"
 authtoken: YOUR_NGROK_AUTH_TOKEN
@@ -53,6 +53,7 @@ After ngrok is running, update the following configurations in your project:
 ### Server Configuration
 
 1. Take LINK 1 from paragraph nr 3 (previous part) and update the URL in SERVER: server/src/service/start.ts:
+Server: https://github.com/SergeiEensalu/server
 
 ```bash
   const options = {
@@ -94,7 +95,7 @@ Code should like something like this (this is example)
 ### WEB Configuration
 
 1. Take LINK 2 from paragraph nr 3 (previous part) and update the URL in WEB: web/src/server/index.ts:
-
+WEB: https://github.com/SergeiEensalu/web
 ```bash
 export const BASE_URL = `${YOUR_URL}`; // TODO: REPLACE 'YOUR_URL' WITH YOU LINK 2.
 ```
@@ -111,6 +112,7 @@ Located here:
 https://t.me/whale_demo_project_2023_bot
 
 ### 5.Running the Server Locally
+Server: https://github.com/SergeiEensalu/server
 
 To start the server locally:
 
@@ -121,7 +123,7 @@ npm run start
 ```
 
 ### 6.Running the WEB Locally
-
+WEB: https://github.com/SergeiEensalu/web
 To start the server locally:
 
 ```bash
